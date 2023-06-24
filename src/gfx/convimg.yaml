@@ -1,0 +1,64 @@
+palettes:
+  - name: swap_palette
+    # This palette isn't actually exported
+    # It ensures each image gets mapped to the correct slots
+    max-entries: 12
+    fixed-entries:
+      # Index 0 should be unused (for transparency)
+      # - color: {index: 0, r: 255, g: 255, b: 255}
+      # Link
+      - color: { index: 1, r: 5, g: 206, b: 99 } #05CE63
+      - color: { index: 2, r: 21, g: 67, b: 204 } #1543CC
+      - color: { index: 3, r: 30, g: 155, b: 201 } #1E9BC9
+      # Background
+      - color: { index: 4, r: 38, g: 73, b: 246 } #2649F6
+      - color: { index: 5, r: 41, g: 76, b: 8 } #294C08
+      - color: { index: 6, r: 32, g: 232, b: 71 } #20E847
+      - color: { index: 7, r: 35, g: 134, b: 81 } #238651
+      - color: { index: 8, r: 70, g: 161, b: 227 } #46A1E3
+      - color: { index: 9, r: 71, g: 244, b: 224 } #47F4E0
+      - color: { index: 10, r: 49, g: 21, b: 147 } #311593
+      - color: { index: 11, r: 52, g: 251, b: 98 } #34FB62
+    quality: 10
+    images: automatic
+
+converts:
+  - name: overworld_tileset
+    palette: swap_palette
+    tilesets:
+      tile-width: 16
+      tile-height: 16
+      pointer-table: false
+      images:
+        - overworld_tileset_swapped
+    compress: zx0
+
+  - name: link_sprites
+    palette: swap_palette
+    tilesets:
+      tile-width: 16
+      tile-height: 16
+      pointer-table: false
+      images:
+        - link_sprites_swapped
+    # style: rlet
+    # compress: zx0
+
+outputs:
+  - type: appvar
+    name: ZGfxOver
+    include-file: ZGfxOver.h
+    converts:
+      - overworld_tileset
+    const: true
+    source-format: c
+    archived: true
+
+  - type: appvar
+    name: ZGfxComm
+    include-file: ZGfxComm.h
+    converts:
+      - link_sprites
+    const: true
+    source-format: c
+    archived: true

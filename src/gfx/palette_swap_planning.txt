@@ -1,0 +1,161 @@
+1 transparent color (permanent)
+
+Sprite palettes:
+- Link: 3 colors
+    - Normal Green
+        - d48820 Orange
+        - 783c00 Brown
+        - 74c400 Light green 1
+    - Normal Blue
+        - d48820 Orange
+        - 783c00 Brown
+        - bcbcec Lighter indigo
+    - Normal Red
+        - d48820 Orange
+        - 783c00 Brown
+        - 982220 Red
+    - Dungeon 3 Green
+        - e4c490 Light orange
+        - 783c00 Brown
+        - 74c400 Light green 1
+    - Dungeon 3 Blue
+        - e4c490 Light orange
+        - 783c00 Brown
+        - bcbcec Lighter indigo
+    - Dungeon 3 Red
+        - e4c490 Light orange
+        - 783c00 Brown
+        - 982220 Red
+    - Hurt clock 1
+        - d48820 Orange
+        - eceeec White
+        - 982220 Red
+    - Hurt clock 2
+        - 787cec Light indigo
+        - eceeec White
+        - 300088 Dark purple
+    - Hurt clock 3 overworld
+        - 006678 Turquoise
+        - 982220 Red
+        - 000000 Black
+    - Hurt clock 3 dungeon 1
+        - 006678 Turquoise
+        - 38b4cc Light turquoise
+        - 00323c Dark blue
+    - Hurt clock 3 dungeon 2
+        - 5c1ee4 Blue
+        - 787cec Light indigo
+        - 300088 Dark purple
+    - Hurt clock 3 dungeon 3
+        - 007628 Green 3
+        - 38cc6c Light green-blue
+        - 003c00 Dark green 3
+    - Hurt clock 3 dungeon 4/6
+        - 545a00 Dark yellow-green
+        - a0aa00 Yellow-green
+        - 202a00 Darker yellow-green
+    - Hurt clock 3 dungeon 5/7
+        - 087c00 Green 2
+        - 4cd020 Light green 2
+        - 003c00 Dark green 3
+    - Hurt clock 3 dungeon 8
+        - a0a2a0 Lighter gray
+        - eceeec White
+        - 545454 Gray
+    - Hurt clock 3 dungeon 9
+        - a0a2a0 Lighter gray
+        - eceeec White
+        - 000000 Black
+- Misc: 24 colors
+    - Overworld:
+        - Slot 1 (3) = Red enemy
+            - e4c490 Light orange
+            - eceeec White
+            - 982220 Red
+        - Slot 2 (3) = Light blue enemy
+            - 4c9aec Light blue
+            - eceeec White
+            - 081090 Dark blue
+        - Slot 3 (3) = Dark blue enemy
+            - 006678 Turquoise
+            - 982220 Red
+            - 000000 Black
+        - Slot 4 (3) = Sword
+        - Slot 5 (3) =
+
+Tile palettes:
+- Status Bar:
+- Background: 8 colors
+    - Overworld / Caves:
+            - Note: 2 "impossible" gfx glitches
+        - Slot 1 (4):
+            - Orange
+                - 000000 Black
+                - 3032ec Blue 2
+                - e4c490 Light orange
+                - 783c00 Brown
+        - Slot 2 (4):
+            - Green
+                - 000000 Black
+                - 3032ec Blue 2
+                - e4c490 Light orange
+                - 087c00 Green 2
+            - Gray
+                - 000000 Black
+                - 3032ec Blue 2
+                - 545454 Gray
+                - eceeec White
+            - Cave (yes black needs to be duplicated)
+                - 000000 Black
+                - 3032ec Blue 2
+                - 000000 Black
+                - 3c1800 Dark brown
+        - Slot 3 = unused
+    - Dungeons:
+        - Slot 1 (4) = Main palette
+                - 0=black,1=normal,2=light,3=dark
+            - Dungeon 1
+                - 006678 Dark turquoise
+                - 38b4cc Light turquoise
+                - 00323c Dark blue
+            - Dungeon 2
+                - 5c1ee4 Blue
+                - 787cec Light indigo
+                - 300088 Dark purple
+            - Dungeon 3
+                - 007628 Green 3
+                - 38cc6c Light green-blue
+                - 003c00 Dark green 3
+            - Dungeon 4/6
+                - 545a00 Dark yellow-green
+                - a0aa00 Yellow-green
+                - 202a00 Darker yellow-green
+            - Dungeon 5/7
+                - 087c00 Green 2
+                - 4cd020 Light green 2
+                - 003c00 Dark green 3
+            - Dungeon 8
+                - a0a2a0 Lighter gray
+                - eceeec White
+                - 545454 Gray
+            - Dungeon 9
+                - a0a2a0 Lighter gray
+                - eceeec White
+                - 000000 Black
+        - (1) = Accent color
+            - Replace index 3 with accent color
+            - Accent colors q1: 1b 2r 3r 4b 5r 6r 7b 8lb 9r
+                - 3032ec blue
+                - 982220 red
+                - 4c9aec light blue
+        - (3) = Sand palette
+
+
+
+INDEXING
+ 0 - transparent (length 1)
+ 1 - link (length 3)
+ 4 - background (length 8)
+12 - misc sprites (length 24)
+36 - status bar / menu (????)
+

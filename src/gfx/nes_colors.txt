@@ -1,0 +1,63 @@
+Using the exact NES colors
+
+#FF0080 - Transparent
+
+#545454 - Gray
+#001E74 - Darker blue
+#081090 - Dark blue
+#300088 - Dark purple
+#440064 - Dark magenta
+#5C0030 - Dark pink
+#540400 - Dark red
+#3C1800 - Dark brown
+#202A00 - Darker yellow-green
+#083A00 - Dark green 1
+#004000 - Dark green 2
+#003C00 - Dark green 3
+#00323C - Dark turquoise
+#000000 - Black
+
+#989698 - Light gray
+#084CC4 - Blue 1
+#3032EC - Blue 2
+#5C1EE4 - Purple
+#8814B0 - Magenta
+#A01464 - Pink
+#982220 - Red
+#783C00 - Brown
+#545A00 - Dark yellow-green
+#287200 - Green 1
+#087C00 - Green 2
+#007628 - Green 3
+#006678 - Turquoise
+#080808 - Light black
+
+#ECEEEC - White
+#4C9AEC - Light blue
+#787CEC - Light indigo
+#B062EC - Light purple
+#E454EC - Light magenta
+#EC58B4 - Light pink
+#EC6A64 - Light red
+#D48820 - Orange
+#A0AA00 - Yellow-green
+#74C400 - Light green 1
+#4CD020 - Light green 2
+#38CC6C - Light green-blue
+#38B4CC - Light turquoise
+#3C3C3C - Dark gray
+
+#ECEEEC - White (again)
+#A8CCEC - Lighter blue
+#BCBCEC - Lighter indigo
+#D4B2EC - Lighter purple
+#ECAEEC - Lighter magenta
+#ECAED4 - Lighter pink
+#ECB4B0 - Lighter red
+#E4C490 - Light orange
+#CCD278 - Light yellow-green
+#B4DE78 - Lighter green 1
+#A8E290 - Lighter green 2
+#98E2B4 - Lighter green-blue
+#A0D6E4 - Lighter turquoise
+#A0A2A0 - Lighter gray
