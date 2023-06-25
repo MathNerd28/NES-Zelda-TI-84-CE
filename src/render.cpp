@@ -47,55 +47,94 @@ static void renderTilemap(uint24_t x_offset, uint24_t y_offset) {
                                     zelda.background.screenNumX]);
 
     int24_t x_draw, y_draw;
-    uint8_t x, x_res, x_tile, y, y_tile;
+    uint8_t x, x_reset, x_tile, y, y_tile;
     uint24_t y_next;
 
-    x_res = x_offset / BACKGROUND_TILE_SIZE;
+    x_reset = x_offset / BACKGROUND_TILE_SIZE;
     y = y_offset / BACKGROUND_TILE_SIZE;
     x_offset %= BACKGROUND_TILE_SIZE;
-    y_draw = BACKGROUND_Y - (y_offset % BACKGROUND_TILE_SIZE);
-
-    // First row
-    x = x_res;
+    y_offset %= BACKGROUND_TILE_SIZE;
     y_next = y * BACKGROUND_WIDTH;
-    x_draw = BACKGROUND_X - x_offset;
-    for (x_tile = 0; x_tile <= BACKGROUND_WIDTH_TILES; x_tile++) {
-        gfx_Sprite(zelda.background.tiles[zelda.background.tilemap[x + y_next]],
-                   x_draw, y_draw);
-        x++;
-        x_draw += BACKGROUND_TILE_SIZE;
-    }
-    y++;
-    y_draw += BACKGROUND_TILE_SIZE;
-    y_next += BACKGROUND_WIDTH;
 
-    for (y_tile = 1; y_tile < BACKGROUND_HEIGHT_TILES; y_tile++) {
-        x = x_res + 1;
-        x_draw = (BACKGROUND_X + BACKGROUND_TILE_SIZE) - x_offset;
-        for (x_tile = 1; x_tile < BACKGROUND_WIDTH_TILES; x_tile++) {
-            gfx_Sprite_NoClip(
-                zelda.background.tiles[zelda.background.tilemap[x + y_next]], x_draw,
-                y_draw);
+    // If aligned to 16x16 grid, skip clipping
+    // Always aligned to at least x or y
+    bool noClipX = x_offset == 0;
+    bool noClipY = y_offset == 0;
+    if (noClipX && noClipY) {
+        y_draw = BACKGROUND_Y;
+        for (y_tile = 0; y_tile < BACKGROUND_HEIGHT_TILES; y_tile++) {
+            x = x_reset;
+            x_draw = BACKGROUND_X;
+            for (x_tile = 0; x_tile < BACKGROUND_WIDTH_TILES; x_tile++) {
+                gfx_Sprite_NoClip(zelda.background.tiles[zelda.background.tilemap[x + y_next]], x_draw, y_draw);
+                x++;
+                x_draw += BACKGROUND_TILE_SIZE;
+            }
+            y++;
+            y_next += BACKGROUND_WIDTH;
+            y_draw += BACKGROUND_TILE_SIZE;
+        }
+        return;
+    } else if (noClipX) {
+        // First row (clipped)
+        y_draw = BACKGROUND_Y - y_offset;
+        x_draw = BACKGROUND_X;
+        x = x_reset;
+        for (x_tile = 0; x_tile < BACKGROUND_WIDTH_TILES; x_tile++) {
+            gfx_Sprite(zelda.background.tiles[zelda.background.tilemap[x + y_next]],
+                       x_draw, y_draw);
             x++;
             x_draw += BACKGROUND_TILE_SIZE;
         }
-        gfx_Sprite(zelda.background.tiles[zelda.background.tilemap[x_res + y_next]],
-                   BACKGROUND_X - x_offset, y_draw);
-        gfx_Sprite(zelda.background.tiles[zelda.background.tilemap[x + y_next]],
-                   x_draw, y_draw);
         y++;
-        y_next += BACKGROUND_WIDTH;
         y_draw += BACKGROUND_TILE_SIZE;
-    }
-
-    // Last row
-    x = x_res;
-    x_draw = BACKGROUND_X - x_offset;
-    for (x_tile = 0; x_tile <= BACKGROUND_WIDTH_TILES; x_tile++) {
-        gfx_Sprite(zelda.background.tiles[zelda.background.tilemap[x + y_next]],
-                   x_draw, y_draw);
-        x++;
-        x_draw += BACKGROUND_TILE_SIZE;
+        y_next += BACKGROUND_WIDTH;
+        // Middle rows (unclipped)
+        for (y_tile = 0; y_tile < BACKGROUND_HEIGHT_TILES - 1; y_tile++) {
+            x_draw = BACKGROUND_X;
+            x = x_reset;
+            for (x_tile = 0; x_tile < BACKGROUND_WIDTH_TILES; x_tile++) {
+                gfx_Sprite_NoClip(zelda.background.tiles[zelda.background.tilemap[x + y_next]], x_draw, y_draw);
+                x++;
+                x_draw += BACKGROUND_TILE_SIZE;
+            }
+            y++;
+            y_next += BACKGROUND_WIDTH;
+            y_draw += BACKGROUND_TILE_SIZE;
+        }
+        // Last row (clipped)
+        x_draw = BACKGROUND_X - x_offset;
+        x = x_reset;
+        for (x_tile = 0; x_tile < BACKGROUND_WIDTH_TILES; x_tile++) {
+            gfx_Sprite(zelda.background.tiles[zelda.background.tilemap[x + y_next]],
+                       x_draw, y_draw);
+            x++;
+            x_draw += BACKGROUND_TILE_SIZE;
+        }
+        return;
+    } else if (noClipY) {
+        y_draw = BACKGROUND_Y;
+        for (y_tile = 0; y_tile < BACKGROUND_HEIGHT_TILES; y_tile++) {
+            x = x_reset + 1;
+            x_draw = (BACKGROUND_X + BACKGROUND_TILE_SIZE) - x_offset;
+            for (x_tile = 0; x_tile <= BACKGROUND_WIDTH_TILES - 2; x_tile++) {
+                gfx_Sprite_NoClip(
+                    zelda.background.tiles[zelda.background.tilemap[x + y_next]], x_draw,
+                    y_draw);
+                x++;
+                x_draw += BACKGROUND_TILE_SIZE;
+            }
+            gfx_Sprite(zelda.background.tiles[zelda.background.tilemap[x_reset + y_next]],
+                       BACKGROUND_X - x_offset, y_draw);
+            gfx_Sprite(zelda.background.tiles[zelda.background.tilemap[x + y_next]],
+                       x_draw, y_draw);
+            y++;
+            y_next += BACKGROUND_WIDTH;
+            y_draw += BACKGROUND_TILE_SIZE;
+        }
+        return;
+    } else {
+        // should never happen, just don't render anything
     }
 }
 
@@ -143,7 +182,7 @@ static void renderMap() {
 static void undrawLink() {
     // If background is going to be drawn over it, don't bother
     if (!zelda.background.framesToDraw) {
-        gfx_Sprite(zelda.link.backgroundBehind2, zelda.link.prevX2+BACKGROUND_X, zelda.link.prevY2 + BACKGROUND_Y);
+        gfx_Sprite(zelda.link.backgroundBehind2, zelda.link.prevX2 + BACKGROUND_X, zelda.link.prevY2 + BACKGROUND_Y);
     }
 }
 
@@ -185,41 +224,25 @@ static void renderDebug() {
     fontlib_DrawString("FPS=");
     fontlib_DrawInt(zelda.debug.fps, 1);
 
-    fontlib_SetCursorPosition(256, 8);
-    fontlib_DrawString("Lt=");
-    fontlib_DrawInt(zelda.debug.logicTime, 1);
+    // fontlib_SetCursorPosition(256, 8);
+    // fontlib_DrawString("Lt=");
+    // fontlib_DrawInt(zelda.debug.logicTime, 1);
 
-    fontlib_SetCursorPosition(256, 16);
-    fontlib_DrawString("Rt=");
-    fontlib_DrawInt(zelda.debug.renderTime, 1);
+    // fontlib_SetCursorPosition(256, 16);
+    // fontlib_DrawString("Rt=");
+    // fontlib_DrawInt(zelda.debug.renderTime, 1);
 
-    fontlib_SetCursorPosition(256, 24);
-    fontlib_DrawString("Tt=");
-    fontlib_DrawInt(zelda.debug.totalTime, 1);
+    // fontlib_SetCursorPosition(256, 24);
+    // fontlib_DrawString("Tt=");
+    // fontlib_DrawInt(zelda.debug.totalTime, 1);
 
-    fontlib_SetCursorPosition(256, 32);
-    fontlib_DrawString("D=");
-    fontlib_DrawInt(zelda.link.dirFacing, 1);
+    // fontlib_SetCursorPosition(256, 32);
+    // fontlib_DrawString("X=");
+    // fontlib_DrawInt(zelda.link.xPos, 1);
 
-    fontlib_SetCursorPosition(256, 40);
-    fontlib_DrawString("X=");
-    fontlib_DrawInt(zelda.link.xPos, 1);
-
-    fontlib_SetCursorPosition(256, 48);
-    fontlib_DrawString("Y=");
-    fontlib_DrawInt(zelda.link.yPos, 1);
-
-    fontlib_SetCursorPosition(256, 56);
-    fontlib_DrawString("Xs=");
-    fontlib_DrawInt(zelda.link.xSubPos, 1);
-
-    fontlib_SetCursorPosition(256, 64);
-    fontlib_DrawString("Ys=");
-    fontlib_DrawInt(zelda.link.ySubPos, 1);
-
-    fontlib_SetCursorPosition(256, 72);
-    fontlib_DrawString("A=");
-    fontlib_DrawInt(zelda.link.spriteIndex, 1);
+    // fontlib_SetCursorPosition(256, 40);
+    // fontlib_DrawString("Y=");
+    // fontlib_DrawInt(zelda.link.yPos, 1);
 }
 #endif
 

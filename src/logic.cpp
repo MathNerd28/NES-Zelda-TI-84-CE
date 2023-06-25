@@ -18,7 +18,6 @@
 #define LINK_SUBPIXEL_SPEED 64
 
 static void startScreenScroll(direction_t dir) {
-    zelda.settings.lock30fps = true;
     zelda.background.scrollDir = dir;
     zelda.background.scrollSpeed = SCREEN_SCROLL_SPEED_MIN;
     zelda.link.xSubPos = 0;
