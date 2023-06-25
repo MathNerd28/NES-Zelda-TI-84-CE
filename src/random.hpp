@@ -4,4 +4,4 @@
 
 void srandom(uint24_t state);
 
-uint24_t random();
+uint8_t random();

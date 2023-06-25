@@ -8,7 +8,6 @@
 
 #include <fontlibc.h>
 #include <graphx.h>
-#include <sys/timers.h>
 #include <time.h>
 
 static void renderBlackBuffers() {
@@ -224,25 +223,9 @@ static void renderDebug() {
     fontlib_DrawString("FPS=");
     fontlib_DrawInt(zelda.debug.fps, 1);
 
-    // fontlib_SetCursorPosition(256, 8);
-    // fontlib_DrawString("Lt=");
-    // fontlib_DrawInt(zelda.debug.logicTime, 1);
-
-    // fontlib_SetCursorPosition(256, 16);
-    // fontlib_DrawString("Rt=");
-    // fontlib_DrawInt(zelda.debug.renderTime, 1);
-
-    // fontlib_SetCursorPosition(256, 24);
-    // fontlib_DrawString("Tt=");
-    // fontlib_DrawInt(zelda.debug.totalTime, 1);
-
-    // fontlib_SetCursorPosition(256, 32);
-    // fontlib_DrawString("X=");
-    // fontlib_DrawInt(zelda.link.xPos, 1);
-
-    // fontlib_SetCursorPosition(256, 40);
-    // fontlib_DrawString("Y=");
-    // fontlib_DrawInt(zelda.link.yPos, 1);
+    fontlib_SetCursorPosition(256, 8);
+    fontlib_DrawString("Tt=");
+    fontlib_DrawInt(zelda.debug.totalTime, 1);
 }
 #endif
 

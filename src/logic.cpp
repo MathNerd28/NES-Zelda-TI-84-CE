@@ -8,14 +8,11 @@
 #include "render.hpp"
 
 #include <compression.h>
-#include <graphx.h>
 #include <string.h>
 
 #if DEBUG
 #include <time.h>
 #endif
-
-#define LINK_SUBPIXEL_SPEED 64
 
 static void startScreenScroll(direction_t dir) {
     zelda.background.scrollDir = dir;
@@ -164,10 +161,10 @@ static void checkScreenScroll() {
 
 static void snapLinkY() {
     zelda.link.ySubPos = 0;
-    uint8_t offset = zelda.link.yPos % LINK_GRID_SIZE;
+    uint8_t offset = zelda.link.yPos % GRID_SIZE;
     if (!offset) {
         return;
-    } else if (offset < (LINK_GRID_SIZE / 2)) {
+    } else if (offset < (GRID_SIZE / 2)) {
         zelda.link.yPos--;
     } else {
         zelda.link.yPos++;
@@ -176,10 +173,10 @@ static void snapLinkY() {
 
 static void snapLinkX() {
     zelda.link.xSubPos = 0;
-    uint8_t offset = zelda.link.xPos % LINK_GRID_SIZE;
+    uint8_t offset = zelda.link.xPos % GRID_SIZE;
     if (!offset) {
         return;
-    } else if (offset < (LINK_GRID_SIZE / 2)) {
+    } else if (offset < (GRID_SIZE / 2)) {
         zelda.link.xPos--;
     } else {
         zelda.link.xPos++;
